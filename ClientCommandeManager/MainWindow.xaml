@@ -1,0 +1,72 @@
+﻿<Window x:Class="ClientCommandeManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gestion des Clients" Height="600" Width="1000">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Barre de boutons rapide -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Ajouter Client" Command="{Binding AjouterClientCommand}" Margin="5"/>
+            <Button Content="Supprimer Client" Command="{Binding SupprimerClientCommand}" Margin="5"/>
+            <Button Content="Ajouter Commande" Command="{Binding AjouterCommandeCommand}" Margin="5"/>
+            <Button Content="Supprimer Commande" Command="{Binding SupprimerCommandeCommand}" Margin="5"/>
+        </StackPanel>
+
+        <!-- Zone principale -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Formulaire + Liste Clients -->
+            <StackPanel Grid.Column="0" Margin="10">
+                <TextBlock Text="➕ Ajouter un client" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Nom :" />
+                <TextBox Text="{Binding NouveauNom, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Email :" />
+                <TextBox Text="{Binding NouvelEmail, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+
+                <!-- CORRIGÉ ICI : suppression de Click -->
+                <Button Content="Ajouter Client" Command="{Binding AjouterClientCommand}" />
+
+                <Separator Margin="0,15"/>
+
+                <TextBlock Text="👥 Liste des clients" FontWeight="Bold" Margin="0,0,0,5"/>
+                <DataGrid ItemsSource="{Binding Clients}" 
+                          SelectedItem="{Binding ClientSelectionne}" 
+                          AutoGenerateColumns="True" 
+                          Height="200" Margin="0,0,0,5"/>
+                <Button Content="Supprimer Client" Command="{Binding SupprimerClientCommand}" />
+            </StackPanel>
+
+            <!-- Formulaire + Liste Commandes -->
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="➕ Ajouter une commande pour le client sélectionné" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Montant :" />
+                <TextBox Text="{Binding NouveauMontant, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Date :" />
+                <DatePicker SelectedDate="{Binding NouvelleDate}" Margin="0,0,0,10"/>
+
+                <Button Content="Ajouter Commande" Command="{Binding AjouterCommandeCommand}" />
+
+                <Separator Margin="0,15"/>
+
+                <TextBlock Text="📦 Commandes du client sélectionné" FontWeight="Bold" Margin="0,0,0,5"/>
+                <DataGrid ItemsSource="{Binding Commandes}" 
+                          AutoGenerateColumns="True" 
+                          Height="200" Margin="0,0,0,5"/>
+                <Button Content="Supprimer Commande" Command="{Binding SupprimerCommandeCommand}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
